@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace", "CoruscantMarketplace\CoruscantMarketplace.csproj", "{2E225A42-1E66-4DDC-BB9E-ED5A04BA66CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E225A42-1E66-4DDC-BB9E-ED5A04BA66CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E225A42-1E66-4DDC-BB9E-ED5A04BA66CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E225A42-1E66-4DDC-BB9E-ED5A04BA66CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E225A42-1E66-4DDC-BB9E-ED5A04BA66CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04ED5CCE-E9EB-4D3F-97E2-544BFA1E8E51}
+	EndGlobalSection
+EndGlobal
