@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CoruscantMarketplace.DataLayer.Modelos
+namespace CoruscantMarketplace.Core.Models
 {
+    /// <summary>
+    /// Representa a entidade de negócio que irá trazer
+    /// as informações de Produto / Categoria / Loja / Preço
+    /// da entidade Produto
+    /// Entidade não possui identificador único, pois 
+    /// não é uma entidade persistível, é calculada.
+    /// </summary>
     public class ProdutoCategoriaLojaPreco
     {
         [JsonProperty("nome")]

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.Core\CoruscantMarketplace.Core.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.DataLayer\CoruscantMarketplace.DataLayer.csproj" />
+  </ItemGroup>
+
+</Project>

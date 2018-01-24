@@ -9,13 +9,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="mongocsharpdriver" Version="2.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoruscantMarketplace.Core.Impl\CoruscantMarketplace.Core.Impl.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.Core\CoruscantMarketplace.Core.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.Crosscutting\CoruscantMarketplace.Crosscutting.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.DataLayer.Impl\CoruscantMarketplace.DataLayer.Impl.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.DataLayer\CoruscantMarketplace.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>
