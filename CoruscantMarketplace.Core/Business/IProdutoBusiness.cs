@@ -92,5 +92,7 @@ namespace CoruscantMarketplace.Core.Business
         /// Traz o nome de todas as categorias
         /// </returns>
         IEnumerable<string> ListarCategorias();
+
+        IEnumerable<ResumoProduto> ObterResumoProduto(string produto);
     }
 }

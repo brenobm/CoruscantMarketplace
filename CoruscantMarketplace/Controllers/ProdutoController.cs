@@ -190,5 +190,12 @@ namespace CoruscantMarketplace.Controllers
         {
             return _produtoBusiness.ListarCategorias();
         }
+
+        [HttpGet("resumoproduto/{produto}")]
+        [Authorize]
+        public IEnumerable<ResumoProduto> GetResumoProduto(string produto)
+        {
+            return _produtoBusiness.ObterResumoProduto(produto);
+        }
     }
 }

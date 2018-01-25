@@ -160,5 +160,10 @@ namespace CoruscantMarketplace.Core.Impl.Business
         {
             return _produtoRepository.ListarTodos();
         }
+
+        public IEnumerable<ResumoProduto> ObterResumoProduto(string produto)
+        {
+            return _produtoRepository.ObterResumoProduto(produto);
+        }
     }
 }

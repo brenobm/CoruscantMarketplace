@@ -265,5 +265,72 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
 
         }
+
+        public IEnumerable<ResumoProduto> ObterResumoProduto(string produto)
+        {
+            //Função MAP
+            string funcaoMap = @"
+                function() {
+                    emit(this.nome, this);
+                }
+            ";
+
+            //Função REDUCE
+            string funcaoReduce = @"
+                function(id, values) {
+                    var lojas = [];
+                    var somatoriaRecomendacao = 0;
+                    var quantidadeRecomendacao = 0;
+
+                    function somaAvaliacao (total, avaliacao) {
+                        return total + avaliacao.recomendacao;
+                    }
+
+                    values.forEach (function (value) {
+                        lojas.push({ Loja: value.loja, Preco: value.preco });
+                        
+                        somatoriaRecomendacao += value.avaliacao.reduce(somaAvaliacao);
+                        quantidadeRecomendacao += value.avaliacao.length;
+                        
+                    });
+
+                    var resumo = {
+                        Nome: values[0].nome,
+                        Categoria: values[0].categoria,
+                        Fabricante: values[0].categoria,
+                        Lojas: lojas,
+                        Avaliacao: Math.round(somatoriaRecomendacao / quantidadeRecomendacao)
+                    };
+                    
+
+                    return resumo;
+                }
+            ";
+
+            try
+            {
+                // Filtra por nome do produto
+                MapReduceOptions<ProdutoEntity, EntityMapReduce<ResumoProduto>> options = new MapReduceOptions<ProdutoEntity, EntityMapReduce<ResumoProduto>>
+                {
+                    Filter = Builders<ProdutoEntity>.Filter.Where(p => p.Nome == produto)
+                };
+
+                //Chama o método MapReduce do RepositoryBase para executar o MapReduce
+                //e retornar no resultado no formato ProdutoLojaPreco
+                return MapReduce<ResumoProduto>(funcaoMap, funcaoReduce, options);
+            }
+            catch (MongoException mex)
+            {
+                _logger.LogError(mex, "Erro ao executar MapReduce do ObterResumoProduto");
+
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos na base de dados.", mex));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao executar MapReduce do ObterResumoProduto");
+
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos.", ex));
+            }
+        }
     }
 }
