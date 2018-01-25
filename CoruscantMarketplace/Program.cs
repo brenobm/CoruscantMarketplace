@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace CoruscantMarketplace
 {
@@ -18,7 +20,7 @@ namespace CoruscantMarketplace
         }
 
         /// <summary>
-        /// Método para a criação do objeto do WebHost
+        /// Método para a criação do objeto do WebHost para usar o Kestrel
         /// </summary>
         /// <param name="args">
         /// Argumentos
@@ -26,9 +28,19 @@ namespace CoruscantMarketplace
         /// <returns>
         /// Instância criada do IWebHost
         /// </returns>
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var config = new ConfigurationBuilder().AddCommandLine(args).Build();
+
+            var host = WebHost.CreateDefaultBuilder(args)
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseConfiguration(config)
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
+
+            return host;
+        }
     }
 }
