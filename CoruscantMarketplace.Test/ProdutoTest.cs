@@ -17,8 +17,10 @@ namespace CoruscantMarketplace.Test
         {
             Mock<IProdutoRepository> produtoRepositorioMock = new Mock<IProdutoRepository>();
             produtoRepositorioMock.Setup(pr => pr.Inserir(It.IsAny<Produto>())).Returns(() => {
-                var p = new Produto();
-                p.Id = Guid.NewGuid().ToString();
+                var p = new Produto
+                {
+                    Id = Guid.NewGuid().ToString()
+                };
                 return p;
             });
 
