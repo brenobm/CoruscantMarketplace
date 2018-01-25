@@ -18,6 +18,6 @@ namespace CoruscantMarketplace.Core.Models
         [JsonProperty("loja")]
         public string Loja { get; set; }
         [JsonProperty("preco")]
-        public string Preco { get; set; }
+        public decimal Preco { get; set; }
     }
 }

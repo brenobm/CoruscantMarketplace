@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj" />
     <ProjectReference Include="..\CoruscantMarketplace.Core\CoruscantMarketplace.Core.csproj" />
+    <ProjectReference Include="..\CoruscantMarketplace.Crosscutting\CoruscantMarketplace.Crosscutting.csproj" />
     <ProjectReference Include="..\CoruscantMarketplace.DataLayer\CoruscantMarketplace.DataLayer.csproj" />
   </ItemGroup>
 

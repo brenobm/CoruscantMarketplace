@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CoruscantMarketplace.Core.Models;
 using CoruscantMarketplace.Crosscutting;
+using CoruscantMarketplace.Crosscutting.Exceptions;
 using CoruscantMarketplace.DataLayer.Impl.Entities;
 using CoruscantMarketplace.DataLayer.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,18 +70,29 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// </param>
         public void AtualizarCampos(string id, object valor)
         {
-            ObjectId objectId = new ObjectId(id);
-
-            var updates = new List<UpdateDefinition<TEntity>>();
-
-            foreach (var propriedade in valor.GetType().GetProperties())
+            try
             {
-                updates.Add(Builders<TEntity>.Update.Set(propriedade.Name, BsonDocumentWrapper.Create(propriedade.PropertyType, propriedade.GetValue(valor))));
+                ObjectId objectId = new ObjectId(id);
+
+                var updates = new List<UpdateDefinition<TEntity>>();
+
+                foreach (var propriedade in valor.GetType().GetProperties())
+                {
+                    updates.Add(Builders<TEntity>.Update.Set(propriedade.Name, BsonDocumentWrapper.Create(propriedade.PropertyType, propriedade.GetValue(valor))));
+                }
+
+                var update = Builders<TEntity>.Update.Combine(updates);
+
+                GetCollection().UpdateOne(t => t.Id == objectId, update);
             }
-
-            var update = Builders<TEntity>.Update.Combine(updates);
-
-            GetCollection().UpdateOne(t => t.Id == objectId, update);
+            catch (MongoException mex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar atualizar o objeto na base de dados.", mex));
+            }
+            catch(Exception ex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar atualizar o objeto.", ex));
+            }
         }
 
         /// <summary>
@@ -92,8 +105,19 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// </param>
         public void Excluir(string id)
         {
-            ObjectId objectId = new ObjectId(id);
-            GetCollection().DeleteOne(t => t.Id == objectId);
+            try
+            {
+                ObjectId objectId = new ObjectId(id);
+                GetCollection().DeleteOne(t => t.Id == objectId);
+            }
+            catch (MongoException mex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar excluir o objeto na base de dados.", mex));
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar excluir o objeto.", ex));
+            }
         }
 
         /// <summary>
@@ -109,11 +133,22 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// </returns>
         public T Inserir(T entidade)
         {
-            TEntity entidadeBanco = Mapper.Map<TEntity>(entidade);
+            try
+            {
+                TEntity entidadeBanco = Mapper.Map<TEntity>(entidade);
 
-            GetCollection().InsertOne(entidadeBanco);
+                GetCollection().InsertOne(entidadeBanco);
 
-            return entidade;
+                return entidade;
+            }
+            catch (MongoException mex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar inserir o objeto na base de dados.", mex));
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar inserir o objeto.", ex));
+            }
         }
 
         /// <summary>
@@ -126,7 +161,19 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// </returns>
         public IEnumerable<T> ListarTodos()
         {
-            return Mapper.Map<IEnumerable<T>>(GetCollection().Find(e => true).ToEnumerable());
+            try
+            {
+                IEnumerable<TEntity> entidades = GetCollection().Find(e => true).ToEnumerable();
+                return Mapper.Map<IEnumerable<T>>(entidades);
+            }
+            catch (MongoException mex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos na base de dados.", mex));
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos.", ex));
+            }
         }
 
         /// <summary>

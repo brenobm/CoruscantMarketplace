@@ -1,6 +1,10 @@
 ﻿using CoruscantMarketplace.Core.Models;
+using CoruscantMarketplace.Crosscutting;
+using CoruscantMarketplace.Crosscutting.Exceptions;
 using CoruscantMarketplace.DataLayer.Impl.Entities;
 using CoruscantMarketplace.DataLayer.Repositories;
+using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 
 namespace CoruscantMarketplace.DataLayer.Impl.Repositories
@@ -37,9 +41,20 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
                 }
             ";
 
-            //Chama o método MapReduce do RepositoryBase para executar o MapReduce
-            //e retornar no resultado no formato ProdutoCategoriaLojaPreco
-            return MapReduce<ProdutoCategoriaLojaPreco>(funcaoMap, funcaoReduce);
+            try
+            {
+                //Chama o método MapReduce do RepositoryBase para executar o MapReduce
+                //e retornar no resultado no formato ProdutoCategoriaLojaPreco
+                return MapReduce<ProdutoCategoriaLojaPreco>(funcaoMap, funcaoReduce);
+            }
+            catch (MongoException mex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos na base de dados.", mex));
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos.", ex));
+            }
         }
     }
 }

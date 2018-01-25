@@ -17,5 +17,20 @@
         /// Nome da Base de dados do MongoDB
         /// </summary>
         public static string MongoDatabaseName { get; set; }
+
+        /// <summary>
+        /// Tipo de ambiente no qual a aplicação está rodadno
+        /// </summary>
+        public static TipoAmbiente Ambiente { get; set; }
+
+        /// <summary>
+        /// Enumerator que define os tipos de ambientes
+        /// </summary>
+        public enum TipoAmbiente
+        {
+            Desenvolvimento,
+            Producao
+        }
+
     }
 }

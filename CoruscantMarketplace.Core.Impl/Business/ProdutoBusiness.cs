@@ -1,7 +1,9 @@
 ﻿using CoruscantMarketplace.Core.Business;
 using CoruscantMarketplace.Core.Models;
+using CoruscantMarketplace.Crosscutting.Exceptions;
 using CoruscantMarketplace.DataLayer.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CoruscantMarketplace.Core.Impl.Business
 {
@@ -66,6 +68,24 @@ namespace CoruscantMarketplace.Core.Impl.Business
         /// </returns>
         public Produto Inserir(Produto produto)
         {
+            if (produto.Preco <= 0)
+                throw new BusinessException("O valor do produto deve ser maior que zero.");
+            
+            if (string.IsNullOrEmpty(produto.Nome))
+                throw new BusinessException("O nome do produto é obrigatório.");
+
+            if (string.IsNullOrEmpty(produto.Loja))
+                throw new BusinessException("A loja do produto é obrigatório.");
+
+            if (string.IsNullOrEmpty(produto.Categoria))
+                throw new BusinessException("A categoria do produto é obrigatório.");
+
+            if (string.IsNullOrEmpty(produto.Fabricante))
+                throw new BusinessException("O fabricante do produto é obrigatório.");
+
+            if (produto.Avaliacao != null && produto.Avaliacao.Any(a => a.Recomendacao < 1 || a.Recomendacao > 5 ))
+                throw new BusinessException("O valor da recomendação do produto deve ter valores entre 1 e 5.");
+
             return _produtoRepository.Inserir(produto);
         }
 

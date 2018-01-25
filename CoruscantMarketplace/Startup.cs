@@ -6,6 +6,7 @@ using CoruscantMarketplace.Crosscutting;
 using CoruscantMarketplace.DataLayer.Impl.Entities;
 using CoruscantMarketplace.DataLayer.Impl.Repositories;
 using CoruscantMarketplace.DataLayer.Repositories;
+using CoruscantMarketplace.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -74,8 +75,17 @@ namespace CoruscantMarketplace
         {
             if (env.IsDevelopment())
             {
+                Configuracoes.Ambiente = Configuracoes.TipoAmbiente.Desenvolvimento;
+
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                Configuracoes.Ambiente = Configuracoes.TipoAmbiente.Producao;
+            }
+
+            //Inclusão do middleware para tratamento de exceções
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc();
         }

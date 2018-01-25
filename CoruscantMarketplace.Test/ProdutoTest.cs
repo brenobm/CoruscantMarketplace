@@ -111,5 +111,41 @@ namespace CoruscantMarketplace.Test
 
             Assert.Equal(precoNovo, produto.Preco);
         }
+
+        [Fact]
+        public void ListarProdutoCategoriaLojaPreco()
+        {
+            List<Produto> produtos = ProdutoFactory.RandomProdutos(10).ToList();
+
+            Mock<IProdutoRepository> produtoRepositorioMock = new Mock<IProdutoRepository>();
+
+
+            produtoRepositorioMock.Setup(pr =>
+                   pr.ListarProdutosCategoriaLojaPreco())
+                        .Returns(() =>
+                        {
+                            return produtos.Select(p => new ProdutoCategoriaLojaPreco
+                            {
+                                Categoria = p.Categoria,
+                                Loja = p.Loja,
+                                Nome = p.Nome,
+                                Preco = p.Preco
+                            });
+                        });
+
+            ProdutoBusiness produtoBusiness = new ProdutoBusiness(produtoRepositorioMock.Object);
+            
+            var produtoCategoria = produtos.Select(p => new ProdutoCategoriaLojaPreco
+            {
+                Categoria = p.Categoria,
+                Loja = p.Loja,
+                Nome = p.Nome,
+                Preco = p.Preco
+            });
+
+            var retorno = produtoBusiness.ListarProdutoCategoriaLojaPreco();
+
+            Assert.Equal(retorno, produtoCategoria);
+        }
     }
 }
