@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj" />
     <ProjectReference Include="..\CoruscantMarketplace.Core\CoruscantMarketplace.Core.csproj" />
     <ProjectReference Include="..\CoruscantMarketplace.Crosscutting\CoruscantMarketplace.Crosscutting.csproj" />

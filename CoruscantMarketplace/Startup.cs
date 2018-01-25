@@ -7,6 +7,7 @@ using CoruscantMarketplace.DataLayer.Impl.Entities;
 using CoruscantMarketplace.DataLayer.Impl.Repositories;
 using CoruscantMarketplace.DataLayer.Repositories;
 using CoruscantMarketplace.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,7 @@ namespace CoruscantMarketplace
             
             //Configura as Injeções de Dependência
             services.AddScoped<IProdutoBusiness, ProdutoBusiness>();
+            services.AddScoped<IAuthTokenBusiness, AuthTokenBusiness>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
             //Configura o AutoMapper
@@ -68,6 +70,19 @@ namespace CoruscantMarketplace
             });
 
             services.AddMvc();
+
+            // Habilita o uso do Auth0
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://coruscantmarketplace.auth0.com/";
+                options.Audience = "http://localhost:57665/api";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,8 +99,11 @@ namespace CoruscantMarketplace
                 Configuracoes.Ambiente = Configuracoes.TipoAmbiente.Producao;
             }
 
-            //Inclusão do middleware para tratamento de exceções
+            // Inclusão do middleware para tratamento de exceções
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
+            // Habilita o uso do Auth0
+            app.UseAuthentication();
 
             app.UseMvc();
         }

@@ -24,6 +24,36 @@
         public static TipoAmbiente Ambiente { get; set; }
 
         /// <summary>
+        /// Usuário da API Auth0
+        /// </summary>
+        public static string Auth0User { get; set; }
+
+        /// <summary>
+        /// Senha do usuário da API Auth0
+        /// </summary>
+        public static string Auth0Password { get; set; }
+
+        /// <summary>
+        /// ClientId da API Auth0
+        /// </summary>
+        public static string Auth0ClientId { get; set; }
+
+        /// <summary>
+        /// ClientSecret da API Auth0
+        /// </summary>
+        public static string Auth0ClientSecret { get; set; }
+
+        /// <summary>
+        /// Audience da API Auth0
+        /// </summary>
+        public static string Auth0Audience { get; set; }
+
+        /// <summary>
+        ///  GrantType da API Auth0
+        /// </summary>
+        public static string Auth0GrantType { get; set; }
+
+        /// <summary>
         /// Enumerator que define os tipos de ambientes
         /// </summary>
         public enum TipoAmbiente
