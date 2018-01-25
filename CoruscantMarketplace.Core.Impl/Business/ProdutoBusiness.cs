@@ -90,6 +90,28 @@ namespace CoruscantMarketplace.Core.Impl.Business
         }
 
         /// <summary>
+        /// Lista todas as categorias
+        /// </summary>
+        /// <returns>
+        /// Traz o nome de todas as categorias
+        /// </returns>
+        public IEnumerable<string> ListarCategorias()
+        {
+            return _produtoRepository.ListarCategorias();
+        }
+
+        /// <summary>
+        /// Lista todas as lojas
+        /// </summary>
+        /// <returns>
+        /// Traz o nome de todas as lojas
+        /// </returns>
+        public IEnumerable<string> ListarLojas()
+        {
+            return _produtoRepository.ListarLojas();
+        }
+
+        /// <summary>
         /// Lista o Nome, Categoria, Loja e Preco de todos os produtos
         /// </summary>
         /// <returns>
@@ -98,6 +120,34 @@ namespace CoruscantMarketplace.Core.Impl.Business
         public IEnumerable<ProdutoCategoriaLojaPreco> ListarProdutoCategoriaLojaPreco()
         {
             return _produtoRepository.ListarProdutosCategoriaLojaPreco();
+        }
+
+        /// <summary>
+        /// Lista o Nome, Categoria e Preco de produtos de uma determinada loja
+        /// </summary>
+        /// <param name="loja">
+        /// Loja que será o filtro dos produtos
+        /// </param>
+        /// <returns>
+        /// Coleção de ProdutoCategoriaPreco
+        ///</returns>
+        public IEnumerable<ProdutoCategoriaPreco> ListarProdutosCategoriaPrecoPorLoja(string loja)
+        {
+            return _produtoRepository.ListarProdutosCategoriaPrecoPorLoja(loja);
+        }
+
+        /// <summary>
+        /// Lista o Nome, Loja e Preco de produtos de uma determinada categoria
+        /// </summary>
+        /// <param name="categoria">
+        /// Categoria que será o filtro dos produtos
+        /// </param>
+        /// <returns>
+        /// Coleção de ProdutoLojaPreco
+        /// </returns>
+        public IEnumerable<ProdutoLojaPreco> ListarProdutosLojaPrecoPorCategoria(string categoria)
+        {
+            return _produtoRepository.ListarProdutosLojaPrecoPorCategoria(categoria);
         }
 
         /// <summary>

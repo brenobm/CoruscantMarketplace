@@ -9,8 +9,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Entities
     /// <typeparam name="T">
     /// Entidade que será retornada no resultado do MapResult
     /// </typeparam>
-    public class EntityMapReduce<T>: EntityBase
+    public class EntityMapReduce<T>
     {
+        /// <summary>
+        /// Identificador da entidade para o MongoDB
+        /// </summary>
+        [BsonElement("id")]
+        public object Id { get; set; }
+
         /// <summary>
         /// Valor de sumarização do retorno do MapReduce
         /// </summary>

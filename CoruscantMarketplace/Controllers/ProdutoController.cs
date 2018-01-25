@@ -122,5 +122,73 @@ namespace CoruscantMarketplace.Controllers
 
             return _produtoBusiness.ListarProdutoCategoriaLojaPreco();
         }
+
+        // GET api/produto/produtoslojaprecoporcategoria/a
+        /// <summary>
+        /// Retorna a lista de todos os produtos por uma categoria trazendo as informações:
+        ///  - Nome do Produto
+        ///  - Loja do Produto
+        ///  - Preço do Produto
+        /// </summary>
+        /// <param name="categoria">
+        /// Categoria que será o filtro dos produtos
+        /// </param>
+        /// <returns>
+        /// Lista de todos os produtos existentes
+        /// </returns>
+        [HttpGet("produtoslojaprecoporcategoria/{categoria}")]
+        [Authorize]
+        public IEnumerable<ProdutoLojaPreco> GetProdutosLojaPrecoPorCategoria(string categoria)
+        {
+            return _produtoBusiness.ListarProdutosLojaPrecoPorCategoria(categoria);
+        }
+
+        // GET api/produto/produtoscategoriaprecoporloja/a
+        /// <summary>
+        /// Retorna a lista de todos os produtos por uma loja trazendo as informações:
+        ///  - Nome do Produto
+        ///  - Categoria do Produto
+        ///  - Preço do Produto
+        /// </summary>
+        /// <param name="loja">
+        /// Loja que será o filtro dos produtos
+        /// </param>
+        /// <returns>
+        /// Lista de todos os produtos existentes
+        /// </returns>
+        [HttpGet("produtoscategoriaprecoporloja/{loja}")]
+        [Authorize]
+        public IEnumerable<ProdutoCategoriaPreco> GetProdutosCategoriaPrecoPorLoja(string loja)
+        {
+            return _produtoBusiness.ListarProdutosCategoriaPrecoPorLoja(loja);
+        }
+
+        // GET api/produto/lojas
+        /// <summary>
+        /// Retorna a lista do nome de todas as lojas
+        /// </summary>
+        /// <returns>
+        /// Lista de todos os nomes das lojas
+        /// </returns>
+        [HttpGet("lojas")]
+        [Authorize]
+        public IEnumerable<string> GetLojas()
+        {
+            return _produtoBusiness.ListarLojas();
+        }
+
+        // GET api/produto/categorias
+        /// <summary>
+        /// Retorna a lista do nome de todas as categorias
+        /// </summary>
+        /// <returns>
+        /// Lista de todos os nomes das categorias
+        /// </returns>
+        [HttpGet("categorias")]
+        [Authorize]
+        public IEnumerable<string> GetCategorias()
+        {
+            return _produtoBusiness.ListarCategorias();
+        }
     }
 }

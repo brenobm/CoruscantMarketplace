@@ -217,15 +217,18 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// <param name="reduce">
         /// String contendo a função Javascript para o Reduce
         /// </param>
+        /// <param name="options">
+        /// Opções do MapReduce
+        /// </param>
         /// <returns>
         /// Coleção de elementos do tipo TReturn recuperado do processamento
         /// do MapReduce.
         /// É retornado somente o valor da propriedasde value da entidade
         /// gerada na execução do MapReduce
         /// </returns>
-        protected IEnumerable<TReturn> MapReduce<TReturn>(string map, string reduce)
+        protected IEnumerable<TReturn> MapReduce<TReturn>(string map, string reduce, MapReduceOptions<TEntity, EntityMapReduce<TReturn>> options = null)
         {
-            return GetCollection().MapReduce<EntityMapReduce<TReturn>>(map, reduce).ToList().Select(mp => mp.Value);
+            return GetCollection().MapReduce<EntityMapReduce<TReturn>>(map, reduce, options).ToList().Select(mp => mp.Value);
         }
     }
 }
