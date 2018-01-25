@@ -4,6 +4,7 @@ using CoruscantMarketplace.Crosscutting;
 using CoruscantMarketplace.Crosscutting.Exceptions;
 using CoruscantMarketplace.DataLayer.Impl.Entities;
 using CoruscantMarketplace.DataLayer.Repositories;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -35,14 +36,23 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// Contém a instância da base de dados do MongoBD
         /// </summary>
         private IMongoDatabase _db;
+        
+        /// <summary>
+        /// Instância do mecanismo de log
+        /// </summary>
+        protected ILogger<RepositoryBase<T, TEntity>> _logger;
 
         /// <summary>
         /// Construtor
         /// Responsável por abrir conexão com o banco do MongoDB
         /// </summary>
-        public RepositoryBase()
+        /// <param name="logger">
+        /// Instancia do mecanismo de logging que será inserido via injeção de dependência
+        /// </param>
+        public RepositoryBase(ILogger<RepositoryBase<T, TEntity>> logger)
         {
             _db = new MongoClient(Configuracoes.MongoConnectionString).GetDatabase(Configuracoes.MongoDatabaseName);
+            _logger = logger;
         }
 
         /// <summary>
@@ -87,10 +97,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
             catch (MongoException mex)
             {
+                _logger.LogError(mex, "Erro ao atualizar campos");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar atualizar o objeto na base de dados.", mex));
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, "Erro ao atualizar campos");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar atualizar o objeto.", ex));
             }
         }
@@ -112,10 +126,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
             catch (MongoException mex)
             {
+                _logger.LogError(mex, "Erro ao excluir");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar excluir o objeto na base de dados.", mex));
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Erro ao excluir");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar excluir o objeto.", ex));
             }
         }
@@ -143,10 +161,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
             catch (MongoException mex)
             {
+                _logger.LogError(mex, "Erro ao inserir");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar inserir o objeto na base de dados.", mex));
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Erro ao inserir");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar inserir o objeto.", ex));
             }
         }
@@ -168,10 +190,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
             catch (MongoException mex)
             {
+                _logger.LogError(mex, "Erro ao listar");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos na base de dados.", mex));
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Erro ao listar");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos.", ex));
             }
         }

@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
+using NLog.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -101,8 +103,8 @@ namespace CoruscantMarketplace
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://coruscantmarketplace.auth0.com/";
-                options.Audience = "http://localhost:57665/api";
+                options.Authority = Configuracoes.Auth0Authority;
+                options.Audience = Configuracoes.Auth0Audience;
             });
 
             // Habilita o uso do Swagger
@@ -147,7 +149,10 @@ namespace CoruscantMarketplace
         /// <param name="env">
         /// Instancia do IHostingEnvironment
         /// </param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <param name="loggerFactory">
+        /// Instancia do ILoggerFactory
+        /// </param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -175,6 +180,10 @@ namespace CoruscantMarketplace
             });
 
             app.UseMvc();
+
+            // Inclui as configurações do NLog como mecanismo de logging
+            loggerFactory.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true });
+            loggerFactory.ConfigureNLog("nlog.config");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CoruscantMarketplace.Core.Business;
 using CoruscantMarketplace.Crosscutting;
 using CoruscantMarketplace.Crosscutting.Exceptions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -14,6 +15,22 @@ namespace CoruscantMarketplace.Core.Impl.Business
     /// </summary>
     public class AuthTokenBusiness : IAuthTokenBusiness
     {
+        /// <summary>
+        /// Instância do mecanismo de log
+        /// </summary>
+        private ILogger<AuthTokenBusiness> _logger;
+
+        /// <summary>
+        /// Construtor para injeção de dependência
+        /// </summary>
+        /// <param name="logger">
+        /// Instancia do mecanismo de logging que será inserido via injeção de dependência
+        /// </param>
+        public AuthTokenBusiness(ILogger<AuthTokenBusiness> logger)
+        {
+            _logger = logger;
+        }
+
         /// <summary>
         /// Acessa a API do OAuth0 para gerar o token válido para a aplicação
         /// É necessário passar as configurações configurada na conta do Auth0
@@ -46,6 +63,8 @@ namespace CoruscantMarketplace.Core.Impl.Business
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, "Erro ao gerar o Token");
+
                 throw new BusinessException(ExceptionHelper.FormatarMensagemErro("Erro ao gerar o novo Token", ex));
             }
         }

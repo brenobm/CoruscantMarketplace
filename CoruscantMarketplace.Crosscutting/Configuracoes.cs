@@ -54,6 +54,11 @@
         public static string Auth0GrantType { get; set; }
 
         /// <summary>
+        /// Authority da API Auth0
+        /// </summary>
+        public static string Auth0Authority { get; set; }
+
+        /// <summary>
         /// Enumerator que define os tipos de ambientes
         /// </summary>
         public enum TipoAmbiente

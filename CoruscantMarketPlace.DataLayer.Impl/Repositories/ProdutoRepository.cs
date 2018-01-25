@@ -6,6 +6,7 @@ using CoruscantMarketplace.DataLayer.Repositories;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace CoruscantMarketplace.DataLayer.Impl.Repositories
 {
@@ -16,6 +17,17 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
     /// </summary>
     public class ProdutoRepository : RepositoryBase<Produto, ProdutoEntity>, IProdutoRepository
     {
+        /// <summary>
+        /// Construtor para injeção de dependência
+        /// </summary>
+        /// <param name="logger">
+        /// Instancia do mecanismo de logging que será inserido via injeção de dependência
+        /// </param>
+        public ProdutoRepository(ILogger<RepositoryBase<Produto, ProdutoEntity>> logger) 
+            : base(logger)
+        {
+        }
+
         /// <summary>
         /// Implementea o método ListarProdutosCategoriaLojaPreco do IProdutoRepository
         /// Lista o Nome, Categoria, Loja e Preco de todos os produtos cadastrados.
@@ -49,10 +61,14 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
             }
             catch (MongoException mex)
             {
+                _logger.LogError(mex, "Erro ao executar MapReduce do ListarProdutosCategoriaLojaPreco");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos na base de dados.", mex));
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Erro ao executar MapReduce do ListarProdutosCategoriaLojaPreco");
+
                 throw new DatabaseException(ExceptionHelper.FormatarMensagemErro("Erro ao tentar listar os objetos.", ex));
             }
         }
