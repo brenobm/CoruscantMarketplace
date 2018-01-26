@@ -18,7 +18,7 @@ namespace CoruscantMarketplace.FakeData
             return UtilHelper.RandomIntList(QTD_LOJAS_POR_PRODUTO, QTD_LOJAS).ToList();
         }
 
-        // 10.000 Produtos
+        // 10.000 Produtos / 200 lojas = 50 produtos unicos
         // 500 lojas
         // 100 categorias
         // Cada produto em mais de 200 lojas

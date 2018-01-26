@@ -27,7 +27,7 @@ namespace CoruscantMarketplace.GerardorMassaTeste
 
         private static void GerarMassa(string url)
         {
-            var produtos = DatabaseHelper.GerarProdutos(10000).ToList();
+            var produtos = DatabaseHelper.GerarProdutos(100).ToList();
 
             var token = GerarToken(url);
 
