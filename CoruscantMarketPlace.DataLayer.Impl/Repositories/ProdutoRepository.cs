@@ -266,19 +266,24 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
 
         }
 
+        /// <summary>
+        /// Implementea o método ObterResumoProduto do IProdutoRepository
+        /// Lista o resumo do produto trazendo m nome, fabricante, categoria, sua
+        /// avaliação média e uma lista contendo todos os preços e as lojas em que o objeto é vendido        
+        /// </summary>
+        /// <param name="produto">
+        /// Nome do produto
+        /// </param>
+        /// <returns>
+        /// Coleção de ResumoProduto
+        /// </returns>
         public IEnumerable<ResumoProduto> ObterResumoProduto(string produto)
         {
-            //Função MAP
+            // Função MAP estrutura o objeto produto no formato do ResumoProduto
+            // usando o nome do produto como chave.
             string funcaoMap = @"
                 function() {
-                    emit(this.nome, this);
-                }
-            ";
 
-            //Função REDUCE
-            string funcaoReduce = @"
-                function(id, values) {
-                    var lojas = [];
                     var somatoriaRecomendacao = 0;
                     var quantidadeRecomendacao = 0;
 
@@ -286,20 +291,46 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
                         return total + avaliacao.recomendacao;
                     }
 
+                    somatoriaRecomendacao = this.avaliacao.reduce(somaAvaliacao, 0);
+                    quantidadeRecomendacao = this.avaliacao.length;
+
+                    var resumo = {
+                        Nome: this.nome,
+                        Categoria: this.categoria,
+                        Fabricante: this.fabricante,
+                        Lojas: [{
+                            Loja: this.loja, 
+                            Preco: this.preco
+                        }],
+                        Avaliacao: somatoriaRecomendacao / quantidadeRecomendacao
+                    };
+
+
+                    emit(this.nome, resumo);
+                }
+            ";
+
+            // Função REDUCE faz a agregação das Lojas e média das avaliações
+            string funcaoReduce = @"
+                function(id, values) {
+                    var lojas = [];
+                    var somatoriaRecomendacao = 0;
+                    var quantidadeRecomendacao = 0;
+
                     values.forEach (function (value) {
-                        lojas.push({ Loja: value.loja, Preco: value.preco });
+                        lojas.push(value.Lojas[0]);
                         
-                        somatoriaRecomendacao += value.avaliacao.reduce(somaAvaliacao);
-                        quantidadeRecomendacao += value.avaliacao.length;
+                        somatoriaRecomendacao += value.Avaliacao;
+                        quantidadeRecomendacao++;
                         
                     });
 
                     var resumo = {
-                        Nome: values[0].nome,
-                        Categoria: values[0].categoria,
-                        Fabricante: values[0].categoria,
+                        Nome: values[0].Nome,
+                        Categoria: values[0].Categoria,
+                        Fabricante: values[0].Fabricante,
                         Lojas: lojas,
-                        Avaliacao: Math.round(somatoriaRecomendacao / quantidadeRecomendacao)
+                        Avaliacao: somatoriaRecomendacao / quantidadeRecomendacao
                     };
                     
 

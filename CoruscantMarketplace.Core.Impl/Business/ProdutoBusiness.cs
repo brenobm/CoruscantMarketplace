@@ -161,6 +161,16 @@ namespace CoruscantMarketplace.Core.Impl.Business
             return _produtoRepository.ListarTodos();
         }
 
+        /// <summary>
+        /// Lista o resumo do produto trazendo m nome, fabricante, categoria, sua
+        /// avaliação média e uma lista contendo todos os preços e as lojas em que o objeto é vendido        
+        /// </summary>
+        /// <param name="produto">
+        /// Nome do produto
+        /// </param>
+        /// <returns>
+        /// Coleção de ResumoProduto
+        /// </returns>
         public IEnumerable<ResumoProduto> ObterResumoProduto(string produto)
         {
             return _produtoRepository.ObterResumoProduto(produto);

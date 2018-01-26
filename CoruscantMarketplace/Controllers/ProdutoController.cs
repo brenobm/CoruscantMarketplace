@@ -191,6 +191,20 @@ namespace CoruscantMarketplace.Controllers
             return _produtoBusiness.ListarCategorias();
         }
 
+        /// <summary>
+        /// Lista o resumo do produto com as informações:
+        ///   - Nome
+        ///   - Fabricante
+        ///   - Categoria
+        ///   - Avaliação Média
+        ///   - Lista de Lojas com o nome da loja e o valor do produto
+        /// </summary>
+        /// <param name="produto">
+        /// Nome do produto
+        /// </param>
+        /// <returns>
+        /// Coleção de ResumoProduto
+        /// </returns>
         [HttpGet("resumoproduto/{produto}")]
         [Authorize]
         public IEnumerable<ResumoProduto> GetResumoProduto(string produto)

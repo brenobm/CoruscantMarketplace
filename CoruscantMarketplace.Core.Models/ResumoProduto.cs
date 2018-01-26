@@ -32,7 +32,7 @@ namespace CoruscantMarketplace.Core.Models
         /// Média da recomendação do produto
         /// </summary>
         [JsonProperty("avaliacao")]
-        public int Avaliacao { get; set; }
+        public double Avaliacao { get; set; }
 
         /// <summary>
         /// Coleção com o nome da loja e o preço
