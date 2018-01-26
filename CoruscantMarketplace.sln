@@ -13,13 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.Core",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.Core.Impl", "CoruscantMarketplace.Core.Impl\CoruscantMarketplace.Core.Impl.csproj", "{297107BA-CBA3-4EA4-9D7A-EDC0B956F7DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace.Core.Models", "CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj", "{5E7CDDE3-07B7-4648-BFC6-BC6831667AF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.Core.Models", "CoruscantMarketplace.Core.Models\CoruscantMarketplace.Core.Models.csproj", "{5E7CDDE3-07B7-4648-BFC6-BC6831667AF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace.Test", "CoruscantMarketplace.Test\CoruscantMarketplace.Test.csproj", "{C3536394-4687-445C-8F52-69520BA008EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.Test", "CoruscantMarketplace.Test\CoruscantMarketplace.Test.csproj", "{C3536394-4687-445C-8F52-69520BA008EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace.Crosscutting", "CoruscantMarketplace.Crosscutting\CoruscantMarketplace.Crosscutting.csproj", "{AF288BD6-CCB5-4F12-AAC2-9C3ACAA9AEF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.Crosscutting", "CoruscantMarketplace.Crosscutting\CoruscantMarketplace.Crosscutting.csproj", "{AF288BD6-CCB5-4F12-AAC2-9C3ACAA9AEF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace.FakeData", "CoruscantMarketplace.FakeData\CoruscantMarketplace.FakeData.csproj", "{E3358506-C776-4C79-8D06-9E5C5FC33F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoruscantMarketplace.FakeData", "CoruscantMarketplace.FakeData\CoruscantMarketplace.FakeData.csproj", "{E3358506-C776-4C79-8D06-9E5C5FC33F2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoruscantMarketplace.GerardorMassaTeste", "CoruscantMarketplace.GerardorMassaTeste\CoruscantMarketplace.GerardorMassaTeste.csproj", "{4F03A0DB-BB87-48E4-AEC6-8FE5829AB3DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{E3358506-C776-4C79-8D06-9E5C5FC33F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3358506-C776-4C79-8D06-9E5C5FC33F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3358506-C776-4C79-8D06-9E5C5FC33F2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F03A0DB-BB87-48E4-AEC6-8FE5829AB3DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F03A0DB-BB87-48E4-AEC6-8FE5829AB3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F03A0DB-BB87-48E4-AEC6-8FE5829AB3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F03A0DB-BB87-48E4-AEC6-8FE5829AB3DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

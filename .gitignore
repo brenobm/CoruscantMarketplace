@@ -262,3 +262,6 @@ __pycache__/
 
 deployBlueMix.bat
 manifest.yml
+/CoruscantMarketplace/Properties/PublishProfiles/CoruscantMarketplace - Web Deploy.pubxml
+/.deployment
+/Dockerfile

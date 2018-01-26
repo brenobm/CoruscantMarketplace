@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 
 namespace CoruscantMarketplace.DataLayer.Impl.Repositories
 {
@@ -51,7 +52,19 @@ namespace CoruscantMarketplace.DataLayer.Impl.Repositories
         /// </param>
         public RepositoryBase(ILogger<RepositoryBase<T, TEntity>> logger)
         {
-            _db = new MongoClient(Configuracoes.MongoConnectionString).GetDatabase(Configuracoes.MongoDatabaseName);
+            MongoClientSettings settings = MongoClientSettings.FromUrl(
+              new MongoUrl(Configuracoes.MongoConnectionString)
+            );
+
+            if (Configuracoes.MongoEnableSSL)
+            {
+                settings.SslSettings = new SslSettings
+                {
+                    EnabledSslProtocols = SslProtocols.Tls12
+                };
+            }
+
+            _db = new MongoClient(settings).GetDatabase(Configuracoes.MongoDatabaseName);
             _logger = logger;
         }
 
